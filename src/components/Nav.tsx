@@ -19,7 +19,7 @@ export function NavbarDemo() {
     },
     {
       name: "Projects",
-      link: "#pricing",
+      link: "/projects",
     },
     {
       name: "Contribution",

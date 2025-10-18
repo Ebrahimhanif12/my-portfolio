@@ -5,6 +5,11 @@ export function Experience() {
   const data = [
     {
       title: "Experiences",
+      content: (
+        <div className="mb-8 text-xs font-normal text-white-800 md:text-sm dark:text-neutral-200">
+          I have worked on various projects using different technologies and frameworks.
+        </div>
+      )
 
     },
     {
