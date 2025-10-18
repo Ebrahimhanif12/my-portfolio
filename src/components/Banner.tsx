@@ -1,34 +1,15 @@
 "use client";
 import { ThreeDMarquee } from "@/components/ui/3d-marquee";
 import { motion } from "framer-motion";
-import { useState, useEffect,useRef } from 'react';
 import { TypingAnimation } from "./magicui/typing-animation";
 
 
 export default function Intro() {
-  const [typedText, setTypedText] = useState("");
   const fullText =
     "A Computer Science student with a strong passion for building software, solving problems, and exploring the latest in technology. From front-end development to algorithmic challenges, I enjoy turning ideas into impactful digital solutions.";
 
-  const indexRef = useRef(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTypedText((prev) => {
-        const nextChar = fullText.charAt(indexRef.current);
-        indexRef.current += 1;
-        return prev + nextChar;
-      });
-
-      if (indexRef.current >= fullText.length) {
-        clearInterval(interval);
-      }
-    }, 40); // Adjust typing speed
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
+    <div>
     <motion.div
       className="relative z-20 text-center px-4 sm:px-6 lg:px-8"
       initial={{ opacity: 0, y: 50 }}
@@ -43,10 +24,12 @@ export default function Intro() {
         </span>
       </h1>
 
-     
-        <TypingAnimation>{fullText}</TypingAnimation>
     
     </motion.div>
+    {/* <TypingAnimation className="">{fullText}</TypingAnimation> */}
+
+    </div>
+    
   );
 }
 
@@ -77,7 +60,7 @@ export function ThreeDMarqueeDemoSecond() {
 
     ];
     return (
-        <div className="relative top-10  mx-auto my-5 flex h-screen w-full  flex-col items-center p-10 overflow-hidden rounded-3xl">
+        <div className="relative top-10  mx-auto my-5 flex w-full  flex-col items-center p-10 overflow-hidden rounded-3xl">
             <div className="relative mt-20 z-20 mb-6 w-40 h-40 rounded-full overflow-hidden border-8 border-gradient-to-r from-purple-500 via-pink-500 to-red-500">
                 <img className="w-full h-full object-cover" src="me.jpg"></img>
             </div>
@@ -132,11 +115,11 @@ export function ThreeDMarqueeDemoSecond() {
             </div> */}
 
             {/* overlay */}
-            <div className="absolute inset-0 z-10  h-full w-full bg-black/80 dark:bg-black/40" />
+            {/* <div className=" z-10  w-full bg-black/80 dark:bg-black/40" />
             <ThreeDMarquee
-                className="pointer-events-none absolute inset-0 h-full w-full"
+                className="pointer-events-none  inset-0  w-full"
                 images={images}
-            />
+            /> */}
         </div>
     );
 }

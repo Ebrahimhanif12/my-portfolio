@@ -43,7 +43,7 @@ function Stars() {
   return (
     <>
       <Points ref={ref} positions={particles.current} frustumCulled={false}>
-        <PointMaterial size={0.04} color="#66ccff" opacity={0.9} depthWrite={false} transparent />
+        <PointMaterial size={0.04} color="#66ccff" opacity={0.5} depthWrite={false} transparent />
       </Points>
       <mesh position={[0, 0, -10]}>
         <sphereGeometry args={[2, 64, 64]} />
@@ -120,13 +120,13 @@ export function TypingCode() {
   }, [lines]);
 
   return (
-    <div className="absolute inset-0 z-10 pointer-events-none text-[#0fb438] font-mono text-lg">
+    <div className=" pointer-events-none text-[#0fb438] font-mono text-lg">
       {lines.map((line, idx) => (
         <div
           key={idx}
           className="whitespace-pre"
           style={{
-            position: "absolute",
+            position: "relative",
             left: line.position.x,
             top: line.position.y,
             transition: "all 0.3s ease",
@@ -144,11 +144,12 @@ export function TypingCode() {
 // Main Component
 export default function StarsCanvas() {
   return (
-    <div className="relative w-screen h-screen bg-black overflow-hidden">
-      <Canvas camera={{ position: [0, 0, 1] }} className="absolute inset-0 z-0">
+    <div className="relative w-screen bg-black">
+
+      {/* <Canvas camera={{ position: [0, 0, 1] }} className=" ">
         <Stars />
         <OrbitControls enableZoom={false} />
-      </Canvas>
+      </Canvas> */}
       <TypingCode />
     </div>
   );

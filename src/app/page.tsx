@@ -1,26 +1,34 @@
 "use client"
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
 import dynamic from "next/dynamic";
-import Header from "@/components/Header";
-import { ThreeDMarqueeDemoSecond } from "@/components/Banner";
-import { Particles } from "@/components/magicui/particles";
+import Intro, { ThreeDMarqueeDemoSecond } from "@/components/Banner";
+import { Projects } from "@/components/projects/page";
+import { StickyScrollRevealDemo } from "@/components/About";
+import AboutSection from "@/components/AboutSection";
+import { Experience } from "@/components/Experience";
 
-const StarsCanvas = dynamic(() => import("@/components/StarsCanvas"), { ssr: false });
+
 
 export default function Layout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+
+
+
 
   return (
-    <div className="">
-      {/* <div className="relative h-full w-full z-40">
-      <Particles ></Particles>
-      </div> */}
-      <div className="relative">
-       <ThreeDMarqueeDemoSecond></ThreeDMarqueeDemoSecond>
-       </div>
+    <div >
+      {/* <ThreeDMarqueeDemoSecond></ThreeDMarqueeDemoSecond> */}
+      {/* <StickyScrollRevealDemo></StickyScrollRevealDemo> */}
+      <AboutSection></AboutSection>
+      <Experience></Experience>
+  
+      {/* <Projects></Projects> */}
+    {/* <h1>Welcome to My Portfolio</h1>
+      <p>This is the home page. Other components will go here.</p> */}
+      
+      
+       
+       
     
       
     </div>

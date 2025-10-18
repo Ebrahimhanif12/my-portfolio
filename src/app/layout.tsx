@@ -1,45 +1,28 @@
-import Background from "@/components/Background";
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
-import Header from "@/components/Header";
-import { ThreeDMarqueeDemoSecond } from "@/components/Banner";
-import StarsCanvas from "@/components/StarsCanvas";
+import './globals.css';
+import { ReactNode } from 'react';
+import Navbar from '@/components/Navbar';
+import MatrixBackground from '@/components/MatrixBackground';
+import MatBackground from '@/components/MatBackground';
+import { NavbarDemo } from '@/components/Nav';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "My Portfolio",
-  description: "Welcome to my portfolio website",
+export const metadata = {
+  title: 'My Portfolio',
+  description: 'Created with Next.js and Matrix-style background',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* Animated Background */}
-        {/* <Background /> */}
+    <html lang="en" className="bg-black">
+      <body className="relative overflow-x-hidden">
+        {/* Background layers */}
+        <MatBackground />
+        <MatrixBackground />
 
-        <div className="">
-          {/* UI Components */}
-          <Navbar />
-          <Sidebar />
-          
-          
-          {/* <Header /> */}
+        {/* Content and navbar above background */}
+        <div className="relative z-10">
+          <NavbarDemo></NavbarDemo>
+          <main className="min-h-screen">{children}</main>
         </div>
-
-        {children}
       </body>
     </html>
   );
