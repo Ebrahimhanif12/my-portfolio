@@ -9,7 +9,7 @@ import Project from "@/components/Projects";
 
 
 
-export default function Layout() {
+export default function page() {
 
 
 

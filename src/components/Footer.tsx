@@ -50,10 +50,22 @@ export default function Footer() {
             </p>
 
             <div className="space-y-4 text-gray-300">
-              <p>📧 <span className="text-[#00ffff]">ebrahimhanif@ieee.org</span></p>
-              <p> <span className="text-[#00ffff]">01609460512</span></p>
-              <p>📍 <span className="text-[#00ffff]">Uttara Sector 4,Dhaka, Bangladesh</span></p>
+              <p className="flex items-center gap-2 hover:text-[#00ffff] transition-colors cursor-pointer">
+                <span className="text-xl">📧</span>
+                <span className="text-[#00ffff]">ebrahimhanif@ieee.org</span>
+              </p>
+
+              <p className="flex items-center gap-2 hover:text-[#00ffff] transition-colors cursor-pointer">
+                <span className="text-xl">📞</span>
+                <span className="text-[#00ffff]">01609460512</span>
+              </p>
+
+              <p className="flex items-center gap-2 hover:text-[#00ffff] transition-colors cursor-pointer">
+                <span className="text-xl">📍</span>
+                <span className="text-[#00ffff]">Uttara Sector 4, Dhaka, Bangladesh</span>
+              </p>
             </div>
+
           </div>
 
           {/* RIGHT: FORM */}
@@ -98,7 +110,7 @@ export default function Footer() {
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-[#00ff9f] to-[#00ffff] text-black font-bold py-3 rounded-lg hover:opacity-90 transition"
+                className="w-full bg-gradient-to-r cursor-pointer from-[#00ff9f] to-[#00ffff] text-black font-bold py-3 rounded-lg hover:opacity-90 transition"
               >
                 Send Message
               </button>

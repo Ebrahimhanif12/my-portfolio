@@ -107,7 +107,7 @@ export default function Project() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-5 py-2.5 rounded-lg 
-                           bg-gradient-to-r from-purple-500 to-blue-500 
+                           bg-gradient-to-r from-[#00ff9f] to-cyan-600 
                            text-sm font-medium hover:opacity-90 transition"
               >
                 <ExternalLink size={16} />
