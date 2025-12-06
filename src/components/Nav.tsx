@@ -30,8 +30,10 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
         {/* Desktop Name */}
         <Link href="/">
-        <div className="text-white cursor-pointer font-bold text-xl cursor-default">
-          Ebrahim Hanif
+        <div className="text-white cursor-pointer flex  font-bold text-xl ">
+          <img className="h-10 w-20" src="/logo.png" alt="" />
+          {/* <p>Ebrahim Hanif</p> */}
+          
         </div>
         </Link>
 
@@ -41,7 +43,7 @@ export default function Navbar() {
             <button
               key={idx}
               onClick={() => handleScroll(item.link)}
-              className="text-white cursor-pointer hover:text-[#00ffff] transition-colors font-medium"
+              className="text-white text-lg cursor-pointer hover:text-[#00ffff] transition-colors font-medium"
             >
               {item.name}
             </button>

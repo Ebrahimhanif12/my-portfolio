@@ -118,7 +118,7 @@ export default function AboutSection() {
 
         {/* Description */}
         <p className="mt-6 text-sm sm:text-base md:text-lg leading-relaxed text-gray-300 max-w-3xl">
-          I’m a <span className="text-[#00ff9f] font-semibold">passionate full-stack developer</span> and competitive programmer who thrives on crafting elegant solutions and pushing technical boundaries. I specialize in <span className="text-[#00ffff] font-semibold">JavaScript, C++, and modern web technologies</span>.
+          I’m <span className="font-bold text-xl "> Ebrahim Hanif </span>, a <span className="text-[#00ff9f] font-semibold">passionate full-stack developer</span> and competitive programmer who thrives on crafting elegant solutions and pushing technical boundaries. I specialize in <span className="text-[#00ffff] font-semibold">JavaScript, C++, and modern web technologies</span>.
         </p>
         <p className="mt-4 text-sm sm:text-base md:text-lg leading-relaxed text-gray-300 max-w-3xl">
           When I’m not coding, I’m probably brainstorming cool UI effects or solving algorithms on <span className="text-[#00ffff] font-semibold">LeetCode</span> and <span className="text-[#00ffff] font-semibold">Codeforces</span>.
@@ -145,7 +145,7 @@ export default function AboutSection() {
 
           {/* GitHub */}
           <a
-            href="https://github.com/your-username"
+            href="https://github.com/Ebrahimhanif12/"
             target="_blank"
             className="px-6 py-2 text-sm sm:text-base rounded-full border border-cyan-400 text-cyan-400 bg-cyan-400/10 hover:bg-cyan-400/20 hover:shadow-[0_0_20px_#00ffff] transition"
           >
@@ -154,7 +154,7 @@ export default function AboutSection() {
 
           {/* Facebook */}
           <a
-            href="https://facebook.com/your-profile"
+            href="https://www.facebook.com/ebrahim.hanif.779/"
             target="_blank"
             className="px-6 py-2 text-sm sm:text-base rounded-full border border-blue-500 text-blue-500 bg-blue-500/10 hover:bg-blue-500/20 hover:shadow-[0_0_20px_#3b82f6] transition"
           >
@@ -163,7 +163,7 @@ export default function AboutSection() {
 
           {/* LinkedIn */}
           <a
-            href="https://linkedin.com/in/your-profile"
+            href="https://www.linkedin.com/in/ebrahimhanif12/"
             target="_blank"
             className="px-6 py-2 text-sm sm:text-base rounded-full border border-sky-500 text-sky-500 bg-sky-500/10 hover:bg-sky-500/20 hover:shadow-[0_0_20px_#0ea5e9] transition"
           >
