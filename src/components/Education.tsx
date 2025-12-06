@@ -43,7 +43,7 @@ const educationData = [
 
 export default function Education() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center px-6 py-24 bg-transparent text-white">
+    <section id="education"  className="relative min-h-screen flex flex-col justify-center px-6 py-24 bg-transparent text-white">
       
       {/* Section Header */}
       <div className="max-w-5xl mx-auto mb-16 text-center">

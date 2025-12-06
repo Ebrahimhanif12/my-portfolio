@@ -100,7 +100,7 @@ export function Experience() {
   ];
 
   return (
-    <div className="relative w-full bg-transparent">
+    <div className="relative w-full bg-transparent" id="experience">
       <Timeline data={data} />
     </div>
   );

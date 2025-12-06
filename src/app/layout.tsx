@@ -2,7 +2,7 @@ import './globals.css';
 import { ReactNode } from 'react';
 import MatrixBackground from '@/components/MatrixBackground';
 import MatBackground from '@/components/MatBackground';
-import { NavbarDemo } from '@/components/Nav';
+import Navbar from '@/components/Nav';
 
 export const metadata = {
   title: 'Ebrahim Hanif',
@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
         {/* Content and navbar above background */}
         <div className="relative z-10">
-          <NavbarDemo></NavbarDemo>
+          <Navbar/>
           <main className="min-h-screen">{children}</main>
         </div>
       </body>

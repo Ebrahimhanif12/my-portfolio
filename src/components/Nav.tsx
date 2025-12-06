@@ -1,85 +1,97 @@
 "use client";
-import {
-  Navbar,
-  NavBody,
-  NavItems,
-  MobileNav,
-  NavbarLogo,
-  MobileNavHeader,
-  MobileNavToggle,
-  MobileNavMenu,
-} from "@/components/ui/resizable-navbar";
 import { useState } from "react";
 
-export function NavbarDemo() {
+export default function Navbar() {
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+
   const navItems = [
-    {
-      name: "About",
-      link: "#features",
-    },
-    {
-      name: "Projects",
-      link: "/projects",
-    },
-    {
-      name: "Contribution",
-      link: "#contribution",
-    },
-    {
-      name: "Contact",
-      link: "#contact",
-    },
-     {
-      name: "Acheivment",
-      link: "/acheivment",
-    },
+    { name: "About", link: "#about" },
+    { name: "Experience", link: "#experience" },
+    { name: "Education", link: "#education" },
+    { name: "Contribution", link: "#contribution" },
+    { name: "Projects", link: "#projects" },
+    { name: "Achievement", link: "/achievement" },
   ];
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const handleScroll = (link: string) => {
+    if (link.startsWith("#")) {
+      const id = link.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = link; // route
+    }
+  };
 
   return (
-    <div className="relative w-full justify-items-end">
-      <Navbar>
-        {/* Desktop Navigation */}
-        <NavBody>
-          <NavbarLogo />
-          <NavItems items={navItems} />
-          
-        </NavBody>
+    <nav className="fixed bg-transparent top-0 left-0 w-full z-50">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
+        {/* Desktop Name */}
+        <div className="text-white font-bold text-xl cursor-default">
+          Ebrahim Hanif
+        </div>
 
-        {/* Mobile Navigation */}
-        <MobileNav>
-          <MobileNavHeader>
-            <NavbarLogo />
-            <MobileNavToggle
-              isOpen={isMobileMenuOpen}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            />
-          </MobileNavHeader>
+        {/* Desktop Nav Items */}
+        <div className="hidden md:flex space-x-8">
+          {navItems.map((item, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleScroll(item.link)}
+              className="text-white cursor-pointer hover:text-[#00ffff] transition-colors font-medium"
+            >
+              {item.name}
+            </button>
+          ))}
+        </div>
 
-          <MobileNavMenu
-            isOpen={isMobileMenuOpen}
-            onClose={() => setIsMobileMenuOpen(false)}
+        {/* Mobile Hamburger */}
+        <div className="md:hidden">
+          <button
+            onClick={() => setIsMobileOpen(!isMobileOpen)}
+            className="text-white focus:outline-none"
           >
-            {navItems.map((item, idx) => (
-              <a
-                key={`mobile-link-${idx}`}
-                href={item.link}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="relative text-neutral-600 dark:text-neutral-300"
-              >
-                <span className="block">{item.name}</span>
-              </a>
-            ))}
-          
-          </MobileNavMenu>
-        </MobileNav>
-      </Navbar>
-      {/* <DummyContent /> */}
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              {isMobileOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
+      </div>
 
-      {/* Navbar */}
-    </div>
+      {/* Mobile Menu */}
+      {isMobileOpen && (
+        <div className="md:hidden bg-transparent">
+          {navItems.map((item, idx) => (
+            <button
+              key={idx}
+              onClick={() => {
+                handleScroll(item.link);
+                setIsMobileOpen(false);
+              }}
+              className="block w-full text-right px-6 py-3 text-white hover:bg-gray-800 transition-colors"
+            >
+              {item.name}
+            </button>
+          ))}
+        </div>
+      )}
+    </nav>
   );
 }
-
-

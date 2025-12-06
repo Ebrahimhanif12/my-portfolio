@@ -61,7 +61,8 @@ export default function AboutSection() {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-20 bg-transparent text-white z-10 overflow-hidden"
+      id="about"
+      className="relative min-h-screen mt-20 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-20 bg-transparent text-white z-10 overflow-hidden"
     >
       {/* ✅ Floating Cyber Particles */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -92,18 +93,18 @@ export default function AboutSection() {
         className="relative z-10 w-full max-w-4xl flex flex-col items-center text-center"
       >
         {/* ✅ Image Always On Top + Parallax */}
-<motion.div style={{ y: imageY }} className="relative mb-8">
-  <img
-    src="/ne3.png"
-    alt="Profile"
-    className="w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56
+        <motion.div style={{ y: imageY }} className="relative mb-8">
+          <img
+            src="/ne3.png"
+            alt="Profile"
+            className="w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56
                rounded-full 
                
                border border-white/20 
                shadow-[0_0_40px_rgba(0,255,255,0.25)]"
-  />
-  <div className="absolute inset-0 rounded-full border border-cyan-400/40 blur-md"></div>
-</motion.div>
+          />
+          <div className="absolute inset-0 rounded-full border border-cyan-400/40 blur-md"></div>
+        </motion.div>
 
 
 
