@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 const educationData = [
   {
     level: "Secondary School Certificate (SSC)",
-    institute: "XYZ High School",
+    institute: "Naya Para Al-Haj Nabi Hossain High School Teknaf",
     year: "2018",
     group: "Science",
-    result: "GPA 5.00 / 5.00",
+    result: "GPA 4.56 / 5.00",
     details: [
       "Strong foundation in Mathematics, Physics & ICT",
       "Participated in science fairs and coding contests",
@@ -17,7 +17,7 @@ const educationData = [
   },
   {
     level: "Higher Secondary Certificate (HSC)",
-    institute: "ABC College",
+    institute: "Cox's Bazar City College",
     year: "2020",
     group: "Science",
     result: "GPA 5.00 / 5.00",
@@ -28,11 +28,11 @@ const educationData = [
     ],
   },
   {
-    level: "Bachelor of Science (BSc) in CSE",
-    institute: "XYZ University",
-    year: "2021 — Present",
+    level: "Bachelor of Science and Technology (BSc) in CSE",
+    institute: "American International University Bangladesh",
+    year: "2023 — Present",
     group: "Computer Science & Engineering",
-    result: "Current CGPA 3.80 / 4.00",
+    result: "Current CGPA 3.61 / 4.00",
     details: [
       "Core courses: DSA, OOP, DBMS, OS, Computer Networks",
       "Full Stack Web Development projects",

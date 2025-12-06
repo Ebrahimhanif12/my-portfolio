@@ -29,6 +29,10 @@ export function NavbarDemo() {
       name: "Contact",
       link: "#contact",
     },
+     {
+      name: "Acheivment",
+      link: "/acheivment",
+    },
   ];
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

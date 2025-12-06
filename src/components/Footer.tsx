@@ -50,9 +50,9 @@ export default function Footer() {
             </p>
 
             <div className="space-y-4 text-gray-300">
-              <p>📧 <span className="text-[#00ffff]">email@example.com</span></p>
-              <p>📍 <span className="text-[#00ffff]">Dhaka, Bangladesh</span></p>
-              <p>💻 <span className="text-[#00ffff]">github.com/yourusername</span></p>
+              <p>📧 <span className="text-[#00ffff]">ebrahimhanif@ieee.org</span></p>
+              <p> <span className="text-[#00ffff]">01609460512</span></p>
+              <p>📍 <span className="text-[#00ffff]">Uttara Sector 4,Dhaka, Bangladesh</span></p>
             </div>
           </div>
 
