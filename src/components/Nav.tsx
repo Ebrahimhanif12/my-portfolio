@@ -1,10 +1,12 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const navItems = [
+    { name: "Home", link: "/" },
     { name: "About", link: "#about" },
     { name: "Experience", link: "#experience" },
     { name: "Education", link: "#education" },
@@ -27,9 +29,11 @@ export default function Navbar() {
     <nav className="fixed bg-transparent top-0 left-0 w-full z-50">
       <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
         {/* Desktop Name */}
-        <div className="text-white font-bold text-xl cursor-default">
+        <Link href="/">
+        <div className="text-white cursor-pointer font-bold text-xl cursor-default">
           Ebrahim Hanif
         </div>
+        </Link>
 
         {/* Desktop Nav Items */}
         <div className="hidden md:flex space-x-8">

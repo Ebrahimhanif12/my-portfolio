@@ -136,7 +136,7 @@ export default function AboutSection() {
         <div className="mt-10 flex flex-wrap justify-center gap-4">
           {/* Download CV */}
           <a
-            href="/cv.pdf"
+            href="/EbrahimHanif's_Cv.pdf"
             download
             className="px-6 py-2 text-sm sm:text-base rounded-full border border-[#00ff9f] text-[#00ff9f] bg-[#00ff9f]/10 hover:bg-[#00ff9f]/20 hover:shadow-[0_0_20px_#00ff9f] transition"
           >
