@@ -1,5 +1,6 @@
 "use client"
 import AboutSection from "@/components/AboutSection";
+import ChatBot from "@/components/Chatbot";
 import Contribution from "@/components/Contribution";
 import Education from "@/components/Education";
 import { Experience } from "@/components/Experience";
@@ -24,6 +25,7 @@ export default function Layout() {
       <Contribution/>
       <Project/>
       <Footer/>
+      <ChatBot/>
   
       {/* <Projects></Projects> */}
     {/* <h1>Welcome to My Portfolio</h1>
