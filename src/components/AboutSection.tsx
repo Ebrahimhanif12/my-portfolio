@@ -132,6 +132,45 @@ export default function AboutSection() {
             </span>
           ))}
         </div>
+        {/* ✅ Action Buttons */}
+        <div className="mt-10 flex flex-wrap justify-center gap-4">
+          {/* Download CV */}
+          <a
+            href="/cv.pdf"
+            download
+            className="px-6 py-2 text-sm sm:text-base rounded-full border border-[#00ff9f] text-[#00ff9f] bg-[#00ff9f]/10 hover:bg-[#00ff9f]/20 hover:shadow-[0_0_20px_#00ff9f] transition"
+          >
+            Download CV
+          </a>
+
+          {/* GitHub */}
+          <a
+            href="https://github.com/your-username"
+            target="_blank"
+            className="px-6 py-2 text-sm sm:text-base rounded-full border border-cyan-400 text-cyan-400 bg-cyan-400/10 hover:bg-cyan-400/20 hover:shadow-[0_0_20px_#00ffff] transition"
+          >
+            GitHub
+          </a>
+
+          {/* Facebook */}
+          <a
+            href="https://facebook.com/your-profile"
+            target="_blank"
+            className="px-6 py-2 text-sm sm:text-base rounded-full border border-blue-500 text-blue-500 bg-blue-500/10 hover:bg-blue-500/20 hover:shadow-[0_0_20px_#3b82f6] transition"
+          >
+            Facebook
+          </a>
+
+          {/* LinkedIn */}
+          <a
+            href="https://linkedin.com/in/your-profile"
+            target="_blank"
+            className="px-6 py-2 text-sm sm:text-base rounded-full border border-sky-500 text-sky-500 bg-sky-500/10 hover:bg-sky-500/20 hover:shadow-[0_0_20px_#0ea5e9] transition"
+          >
+            LinkedIn
+          </a>
+        </div>
+
       </motion.div>
     </section>
   );
