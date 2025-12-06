@@ -33,16 +33,16 @@ export default function Chatbot() {
   }, []);
 
   useEffect(() => {
-  if (isOpen && !hasOpenedOnce) {
-    setMessages([
-      {
-        sender: "bot",
-        text: "Hi, I am Ebrahim Hanif's personal assistant. How can I help you?",
-      },
-    ]);
-    setHasOpenedOnce(true);
-  }
-}, [isOpen, hasOpenedOnce]);
+    if (isOpen && !hasOpenedOnce) {
+      setMessages([
+        {
+          sender: "bot",
+          text: "Hi, I am Ebrahim Hanif's personal assistant. How can I help you?",
+        },
+      ]);
+      setHasOpenedOnce(true);
+    }
+  }, [isOpen, hasOpenedOnce]);
 
 
   // Scroll to bottom when new messages arrive
@@ -102,11 +102,10 @@ export default function Chatbot() {
               {messages.map((msg, idx) => (
                 <div
                   key={idx}
-                  className={`px-4 py-2 rounded-xl max-w-[80%] ${
-                    msg.sender === "user"
+                  className={`px-4 py-2 rounded-xl max-w-[80%] ${msg.sender === "user"
                       ? "bg-blue-600 text-white self-end"
                       : "bg-neutral-700 text-white/90 self-start"
-                  }`}
+                    }`}
                 >
                   {msg.text}
                 </div>
@@ -146,25 +145,29 @@ export default function Chatbot() {
       )}
 
       {/* Floating Chat Icon */}
-      <div className="fixed bottom-4 right-4 flex flex-col items-center z-[1000] pointer-events-auto">
-        {introText && (
-          <div className="relative mb-2 px-3 py-1 bg-neutral-800/90 rounded-xl text-sm font-medium text-white shadow-lg animate-fadeIn pointer-events-none">
-            {introText}
-          </div>
-        )}
+      {!isOpen && (
+        <div className="fixed bottom-4 right-4 flex flex-col items-center z-[1000] pointer-events-auto">
+          {introText && (
+            <div className="relative mb-2 px-3 py-1 bg-neutral-800/90 rounded-xl text-sm font-medium text-white shadow-lg animate-fadeIn pointer-events-none">
+              {introText}
+            </div>
+          )}
 
-        {showPermanentText && (
-          <div className="relative mb-2 px-3 py-1 bg-neutral-800/90 rounded-xl text-sm font-medium text-white shadow-lg animate-fadeIn pointer-events-none">
-            Ask me anything
-          </div>
-        )}
+          {showPermanentText && (
+            <div className="relative mb-2 px-3 py-1 bg-neutral-800/90 rounded-xl text-sm font-medium text-white shadow-lg animate-fadeIn pointer-events-none">
+              Ask me anything
+            </div>
+          )}
 
-        <img
-          src="/chaticon.png"
-          onClick={() => setIsOpen(true)}
-          className="w-14 h-14 sm:w-16 sm:h-16 mt-5 cursor-pointer animate-bounce hover:animate-none transition-all"
-        />
-      </div>
+          <img
+            src="/chaticon.png"
+            onClick={() => setIsOpen(true)}
+            className="w-14 h-14 sm:w-16 sm:h-16 mt-5 cursor-pointer animate-bounce hover:animate-none transition-all"
+            alt="Chat Icon"
+          />
+        </div>
+      )}
+
     </>
   );
 }

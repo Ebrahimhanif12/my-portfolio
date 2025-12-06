@@ -16,10 +16,10 @@ export default function MatrixBackground() {
     const drops = new Array(columns).fill(1);
 
     const draw = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.03)';
       ctx.fillRect(0, 0, width, height);
 
-      ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
+      ctx.fillStyle = 'rgba(0, 255, 0, 0.18)';
       ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {

@@ -111,17 +111,17 @@ export default function AboutSection() {
         </h2>
 
         {/* Typing Role */}
-        <p className="mt-4 text-cyan-300 text-sm sm:text-base md:text-lg font-mono h-6">
+        <p className="mt-4 text-cyan-300 text-xl sm:text-base md:text-lg font-mono h-6">
           {text}
           <span className="animate-pulse">|</span>
         </p>
 
         {/* Description */}
-        <p className="mt-6 text-sm sm:text-base md:text-lg leading-relaxed text-gray-300 max-w-3xl">
-          I’m <span className="font-bold text-xl "> Ebrahim Hanif </span>, a <span className="text-[#00ff9f] font-semibold">passionate full-stack developer</span> and competitive programmer who thrives on crafting elegant solutions and pushing technical boundaries. I specialize in <span className="text-[#00ffff] font-semibold">JavaScript, C++, and modern web technologies</span>.
+        <p className="mt-6 text-2xl sm:text-base md:text-xl leading-relaxed text-gray-300 max-w-3xl">
+          I’m <span className="font-bold text-2xl "> Ebrahim Hanif </span>, a <span className="text-[#00ff9f] text-xl font-semibold">passionate full-stack developer</span> and competitive programmer who thrives on crafting elegant solutions and pushing technical boundaries. I specialize in <span className="text-[#00ffff] font-semibold">JavaScript, C++, and modern web technologies</span>.
         </p>
-        <p className="mt-4 text-sm sm:text-base md:text-lg leading-relaxed text-gray-300 max-w-3xl">
-          When I’m not coding, I’m probably brainstorming cool UI effects or solving algorithms on <span className="text-[#00ffff] font-semibold">LeetCode</span> and <span className="text-[#00ffff] font-semibold">Codeforces</span>.
+        <p className="mt-4  sm:text-base md:text-xl leading-relaxed text-gray-300 max-w-3xl">
+          When I’m not coding, I’m probably brainstorming cool UI effects or solving algorithms on <span className="text-[#00ffff] text-xl font-semibold">LeetCode</span> and <span className="text-[#00ffff] font-semibold">Codeforces</span>.
         </p>
 
         {/* Skills */}
