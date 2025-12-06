@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasOpenedOnce, setHasOpenedOnce] = useState(false);
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -30,6 +31,19 @@ export default function Chatbot() {
     }, 80);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+  if (isOpen && !hasOpenedOnce) {
+    setMessages([
+      {
+        sender: "bot",
+        text: "Hi, I am Ebrahim Hanif's personal assistant. How can I help you?",
+      },
+    ]);
+    setHasOpenedOnce(true);
+  }
+}, [isOpen, hasOpenedOnce]);
+
 
   // Scroll to bottom when new messages arrive
   useEffect(() => {

@@ -21,6 +21,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <div className="relative z-10">
           <Navbar/>
           <main className="min-h-screen">{children}</main>
+          
         </div>
       </body>
     </html>

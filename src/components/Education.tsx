@@ -56,7 +56,7 @@ export default function Education() {
       </div>
 
       {/* Education Cards */}
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="max-w-5xl cursor-pointer mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {educationData.map((edu, index) => (
           <motion.div
             key={index}
@@ -74,12 +74,12 @@ export default function Education() {
               {edu.level}
             </h3>
 
-            <p className="text-sm text-neutral-400 mb-2">
+            <p className="text-l font-bold text-neutral-400 mb-2">
               {edu.institute}
             </p>
 
             <p className="text-sm text-neutral-300 mb-3">
-              Group: {edu.group}
+              Subject: {edu.group}
             </p>
 
             <p className="text-sm text-emerald-400 font-medium mb-4">
