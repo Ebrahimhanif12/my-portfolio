@@ -1,7 +1,10 @@
 "use client"
 import AboutSection from "@/components/AboutSection";
+import Contribution from "@/components/Contribution";
+import Education from "@/components/Education";
 import { Experience } from "@/components/Experience";
-import PopupMessage from "@/components/PopupMessage";
+import Footer from "@/components/Footer";
+import Project from "@/components/Projects";
 
 
 
@@ -15,9 +18,12 @@ export default function Layout() {
     <div >
       {/* <ThreeDMarqueeDemoSecond></ThreeDMarqueeDemoSecond> */}
       {/* <StickyScrollRevealDemo></StickyScrollRevealDemo> */}
-      <PopupMessage></PopupMessage>
       <AboutSection></AboutSection>
       <Experience></Experience>
+      <Education/>
+      <Contribution/>
+      <Project/>
+      <Footer/>
   
       {/* <Projects></Projects> */}
     {/* <h1>Welcome to My Portfolio</h1>

@@ -1,13 +1,12 @@
 import './globals.css';
 import { ReactNode } from 'react';
-import Navbar from '@/components/Navbar';
 import MatrixBackground from '@/components/MatrixBackground';
 import MatBackground from '@/components/MatBackground';
 import { NavbarDemo } from '@/components/Nav';
 
 export const metadata = {
-  title: 'My Portfolio',
-  description: 'Created with Next.js and Matrix-style background',
+  title: 'Ebrahim Hanif',
+  description: 'A Full Stack Developer.',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
