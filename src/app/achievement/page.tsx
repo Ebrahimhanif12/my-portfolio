@@ -1,158 +1,152 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowLeft, Award, BookOpen, CheckCircle2 } from "lucide-react";
 
 const academicAchievements = [
   {
-    title: "SSC Certificate",
-    issuer: "Board of Intermediate & Secondary Education",
-    year: "2019",
-    image: "/certificates/ssc.jpg",
+    title: "BSc in Computer Science & Engineering",
+    issuer: "American International University-Bangladesh (AIUB)",
+    year: "2023 — Present",
+    meta: "CGPA 3.61 / 4.00",
   },
   {
-    title: "HSC Certificate",
-    issuer: "Board of Intermediate & Secondary Education",
-    year: "2021",
-    image: "/certificates/hsc.jpg",
+    title: "Higher Secondary Certificate (HSC)",
+    issuer: "Cox's Bazar City College",
+    year: "2020",
+    meta: "GPA 5.00",
   },
   {
-    title: "BSc in Computer Science",
-    issuer: "American International University-Bangladesh",
-    year: "2025 (Expected)",
-    image: "/certificates/bsc.jpg",
+    title: "Secondary School Certificate (SSC)",
+    issuer: "Naya Para Al-Haj Nabi Hossain High School, Teknaf",
+    year: "2018",
+    meta: "GPA 4.56",
   },
 ];
 
-const skillAchievements = [
+const leadershipAndTech = [
   {
-    title: "Full Stack Web Development",
-    issuer: "Online Training Platform",
-    year: "2023",
-    image: "/certificates/fullstack.jpg",
+    title: "Chapter Chairperson",
+    issuer: "IEEE MTT-S AIUB Student Branch Chapter",
+    year: "2025 — 2026",
+    meta: "Progressed from Volunteer & Website Lead",
   },
   {
-    title: "AI & Machine Learning Workshop",
-    issuer: "IEEE",
-    year: "2024",
-    image: "/certificates/ai.jpg",
+    title: "Technical Team Lead",
+    issuer: "Cox's Bazar Students Forum, AIUB (Palongkee)",
+    year: "Community",
+    meta: "Platform & IT Operations",
   },
-];
-
-const extraCurricular = [
   {
-    title: "Leadership Development Program",
-    issuer: "IEEE AIUB Student Branch",
-    year: "2024",
-    image: "/certificates/leadership.jpg",
+    title: "Campus Ambassador",
+    issuer: "International Congress of Recent Computer Science Trends",
+    year: "2025",
+    meta: "Academic Advocacy",
   },
 ];
-
-function AchievementCard({
-  title,
-  issuer,
-  year,
-  image,
-}: {
-  title: string;
-  issuer: string;
-  year: string;
-  image: string;
-}) {
-  return (
-    <div className="group relative bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden hover:border-cyan-400 transition">
-      {/* IMAGE */}
-      <div className="relative h-64 w-full overflow-hidden">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-cover group-hover:scale-105 transition duration-300"
-        />
-      </div>
-
-      {/* TEXT */}
-      <div className="p-5">
-        <h3 className="text-lg font-semibold text-white mb-1">{title}</h3>
-        <p className="text-sm text-gray-400">{issuer}</p>
-        <p className="text-xs text-cyan-400 mt-1">{year}</p>
-      </div>
-    </div>
-  );
-}
 
 export default function AchievementsPage() {
-  const [showPopup, setShowPopup] = useState(true);
-
-  useEffect(() => {
-    // Auto-hide popup after 5 seconds (optional)
-    const timer = setTimeout(() => setShowPopup(false), 6000);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
-    <main className="relative min-h-screen bg-transparent text-white px-6 py-24 z-10">
-      <div className="max-w-7xl mx-auto">
-        {/* Popup Message */}
-        {showPopup && (
-          <div className="fixed top-60 left-1/2 transform -translate-x-1/2 z-50 bg-neutral-900/95 border border-cyan-400 text-white px-6 py-4 rounded-xl shadow-lg max-w-sm text-center animate-fadeIn">
-            <p>The Certificates will be uploaded soon. Thank you for your understanding.</p>
-            <button
-              onClick={() => setShowPopup(false)}
-              className="mt-3 text-cyan-400 cursor-pointer hover:text-cyan-300 font-semibold"
-            >
-              Close
-            </button>
-          </div>
-        )}
+    <div className="min-h-screen bg-[#09090B] text-[#FAFAFA] py-16 sm:py-24">
+      <div className="max-w-6xl mx-auto px-6">
+        <Link
+          href="/"
+          className="group inline-flex items-center gap-2 font-mono text-xs text-[#71717A] hover:text-[#FAFAFA] transition-colors"
+        >
+          <ArrowLeft
+            size={14}
+            strokeWidth={1.5}
+            className="transition-transform duration-200 group-hover:-translate-x-0.5"
+          />
+          Back to Portfolio
+        </Link>
 
-        {/* HEADER */}
-        <div className="mb-20 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            My <span className="text-cyan-400">Achievements</span>
-          </h1>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            A collection of my academic success, technical certifications, personal
-            development, and extracurricular accomplishments.
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-8 max-w-2xl"
+        >
+          <p className="font-mono text-xs uppercase tracking-[0.14em] text-sky-400/90">
+            CREDENTIALS &amp; RECOGNITION
           </p>
-        </div>
+          <h1 className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-[#FAFAFA]">
+            Academic &amp; Leadership Record
+          </h1>
+          <p className="mt-3 text-sm sm:text-base text-[#A1A1AA] leading-relaxed">
+            Verified milestones across software engineering education, technical
+            leadership, and research initiatives.
+          </p>
+        </motion.div>
 
-        {/* ACADEMIC ACHIEVEMENTS */}
-        <section className="mb-24">
-          <h2 className="text-3xl font-bold mb-10 text-cyan-400">
-            Academic Achievements
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {academicAchievements.map((item, index) => (
-              <AchievementCard key={index} {...item} />
+        <section className="mt-14">
+          <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-[#71717A] mb-5">
+            <BookOpen size={14} strokeWidth={1.5} className="text-sky-400/90" />
+            <span>Academic Credentials</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {academicAchievements.map((item, idx) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{
+                  duration: 0.4,
+                  delay: idx * 0.06,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="surface-card border border-[#222225] rounded-lg p-6"
+              >
+                <div className="flex items-center justify-between gap-2 font-mono text-xs text-[#71717A]">
+                  <span>{item.year}</span>
+                  <span className="text-[#FAFAFA]">{item.meta}</span>
+                </div>
+                <h2 className="mt-4 text-base font-semibold tracking-tight text-[#FAFAFA]">
+                  {item.title}
+                </h2>
+                <p className="mt-1.5 text-sm text-[#A1A1AA]">{item.issuer}</p>
+              </motion.div>
             ))}
           </div>
         </section>
 
-        {/* PERSONAL / SKILL ACHIEVEMENTS */}
-        <section className="mb-24">
-          <h2 className="text-3xl font-bold mb-10 text-emerald-400">
-            Personal & Skill Achievements
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {skillAchievements.map((item, index) => (
-              <AchievementCard key={index} {...item} />
-            ))}
+        <section className="mt-14">
+          <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-[#71717A] mb-5">
+            <Award size={14} strokeWidth={1.5} className="text-sky-400/90" />
+            <span>Leadership &amp; Community</span>
           </div>
-        </section>
-
-        {/* EXTRA CURRICULAR */}
-        <section>
-          <h2 className="text-3xl font-bold mb-10 text-purple-400">
-            Extra-Curricular Achievements
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {extraCurricular.map((item, index) => (
-              <AchievementCard key={index} {...item} />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {leadershipAndTech.map((item, idx) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{
+                  duration: 0.4,
+                  delay: idx * 0.06,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="surface-card border border-[#222225] rounded-lg p-6"
+              >
+                <div className="flex items-center justify-between gap-2 font-mono text-xs text-[#71717A]">
+                  <span>{item.year}</span>
+                  <CheckCircle2 size={14} strokeWidth={1.5} className="text-sky-400/90" />
+                </div>
+                <h2 className="mt-4 text-base font-semibold tracking-tight text-[#FAFAFA]">
+                  {item.title}
+                </h2>
+                <p className="mt-1.5 text-sm text-[#A1A1AA]">{item.issuer}</p>
+                <p className="mt-3 text-xs font-mono text-[#71717A]">
+                  {item.meta}
+                </p>
+              </motion.div>
             ))}
           </div>
         </section>
       </div>
-    </main>
+    </div>
   );
 }

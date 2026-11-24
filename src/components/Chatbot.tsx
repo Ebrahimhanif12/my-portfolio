@@ -1,60 +1,44 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUp, Bot, Sparkles, X } from "lucide-react";
+
+interface Message {
+  sender: "user" | "bot";
+  text: string;
+}
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasOpenedOnce, setHasOpenedOnce] = useState(false);
-  const [messages, setMessages] = useState<{ sender: string; text: string }[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [introText, setIntroText] = useState("");
-  const [showPermanentText, setShowPermanentText] = useState(false);
-  const [fixedPosition, setFixedPosition] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const fullIntro = "Hi, I am Ebrahim's Assistant.";
-
-  // Typing effect
-  useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      setIntroText(fullIntro.slice(0, index + 1));
-      index++;
-      if (index === fullIntro.length) {
-        clearInterval(interval);
-        setTimeout(() => {
-          setIntroText("");
-          setShowPermanentText(true);
-          setFixedPosition(true); // move chat body to final position
-        }, 1500);
-      }
-    }, 80);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     if (isOpen && !hasOpenedOnce) {
       setMessages([
         {
           sender: "bot",
-          text: "Hi, I am Ebrahim Hanif's personal assistant. How can I help you?",
+          text: "Hello — I am Ebrahim Hanif's portfolio assistant. Ask about his engineering work, stack, research, or availability.",
         },
       ]);
       setHasOpenedOnce(true);
     }
   }, [isOpen, hasOpenedOnce]);
 
-
-  // Scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
   const handleSend = async () => {
-    if (!input.trim()) return;
+    const trimmed = input.trim();
+    if (!trimmed || isTyping) return;
 
-    setMessages((prev) => [...prev, { sender: "user", text: input }]);
-    const userMessage = input;
+    setMessages((prev) => [...prev, { sender: "user", text: trimmed }]);
     setInput("");
     setIsTyping(true);
 
@@ -62,12 +46,26 @@ export default function Chatbot() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({ message: trimmed }),
       });
       const data = await res.json();
-      setMessages((prev) => [...prev, { sender: "bot", text: data.reply }]);
-    } catch (err) {
-      setMessages((prev) => [...prev, { sender: "bot", text: "Oops! Something went wrong." }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text:
+            data?.reply ||
+            "Unable to process that right now. Please email ebrahimhanif@ieee.org.",
+        },
+      ]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: "Connection error. Please try again or reach out at ebrahimhanif@ieee.org.",
+        },
+      ]);
     } finally {
       setIsTyping(false);
     }
@@ -75,99 +73,143 @@ export default function Chatbot() {
 
   return (
     <>
-      {/* Chat body */}
-      {isOpen && (
-        <div
-          className={`fixed right-4 z-[999] w-full max-w-[22rem] sm:max-w-[24rem] transition-all duration-500
-            ${fixedPosition ? "top-[80px]" : "top-24"}
-          `}
-        >
-          <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 text-white rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-blue-500/50 backdrop-blur-md">
+      {/* Chat Panel */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            key="chat-panel"
+            role="dialog"
+            aria-label="Portfolio Assistant Chat"
+            initial={{ opacity: 0, y: 18, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 14, scale: 0.96 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed bottom-6 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[380px] bg-[#111113] border border-[#27272A] shadow-2xl rounded-lg overflow-hidden flex flex-col"
+          >
             {/* Header */}
-            <div className="flex justify-between items-center bg-neutral-800/90 px-4 py-3 border-b border-blue-500/50">
-              <div className="flex items-center gap-2">
-                <span className="text-blue-400 text-xl animate-pulse">💬</span>
-                <h3 className="font-bold text-lg text-white/90">Ebrahim's Assistant</h3>
+            <div className="flex items-center justify-between px-4 py-3 bg-[#09090B] border-b border-[#222225]">
+              <div className="flex items-center gap-2.5">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-md bg-gradient-to-br from-sky-500/20 to-indigo-500/20 border border-sky-400/30 text-sky-400">
+                  <Bot size={15} strokeWidth={1.75} />
+                </span>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-sm font-medium text-[#FAFAFA] tracking-tight">
+                    Ebrahim&apos;s Assistant
+                  </h3>
+                  <span className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-sky-300 border border-sky-400/30 bg-sky-500/10 px-1.5 py-0.5 rounded-sm">
+                    <Sparkles size={10} strokeWidth={1.75} />
+                    AI
+                  </span>
+                </div>
               </div>
               <button
+                type="button"
                 onClick={() => setIsOpen(false)}
-                className="text-neutral-400 hover:text-white cursor-pointer font-bold"
+                aria-label="Close assistant"
+                className="inline-flex items-center justify-center w-7 h-7 rounded-md text-[#71717A] hover:text-[#FAFAFA] hover:bg-[#18181B] transition-colors cursor-pointer"
               >
-                ✕
+                <X size={15} strokeWidth={1.5} />
               </button>
             </div>
 
-            {/* Scrollable Messages */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-3 max-h-[60vh] sm:max-h-[70vh] md:max-h-[75vh]">
+            {/* Messages */}
+            <div className="h-[340px] p-4 overflow-y-auto space-y-3 bg-[#09090B] flex flex-col">
               {messages.map((msg, idx) => (
-                <div
+                <motion.div
                   key={idx}
-                  className={`px-4 py-2 rounded-xl max-w-[80%] ${msg.sender === "user"
-                      ? "bg-blue-600 text-white self-end"
-                      : "bg-neutral-700 text-white/90 self-start"
-                    }`}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                  className={`px-3.5 py-2.5 rounded-md max-w-[85%] text-sm leading-relaxed ${
+                    msg.sender === "user"
+                      ? "bg-[#FAFAFA] text-[#09090B] self-end"
+                      : "bg-[#111113] border border-[#222225] text-[#FAFAFA] self-start"
+                  }`}
                 >
                   {msg.text}
-                </div>
+                </motion.div>
               ))}
 
               {isTyping && (
-                <div className="bg-neutral-700 text-white/70 self-start px-4 py-2 rounded-xl inline-flex items-center gap-1">
-                  <span className="dot animate-bounce bg-white w-2 h-2 rounded-full"></span>
-                  <span className="dot animate-bounce delay-200 bg-white w-2 h-2 rounded-full"></span>
-                  <span className="dot animate-bounce delay-400 bg-white w-2 h-2 rounded-full"></span>
-                  Typing...
-                </div>
+                <motion.div
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-[#111113] border border-[#222225] text-[#71717A] self-start px-3.5 py-2.5 rounded-md flex items-center gap-1.5"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-sky-400/80 animate-bounce [animation-delay:-0.2s]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-sky-400/80 animate-bounce [animation-delay:-0.1s]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-sky-400/80 animate-bounce" />
+                </motion.div>
               )}
 
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Box */}
-            <div className="flex p-3 border-t border-blue-500/50 bg-neutral-900/90">
+            {/* Input */}
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                handleSend();
+              }}
+              className="flex items-center gap-2 p-3 border-t border-[#222225] bg-[#111113]"
+            >
               <input
                 type="text"
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                placeholder="Type your question..."
-                className="flex-1 bg-neutral-800/70 text-white rounded-xl px-3 py-2 outline-none placeholder:text-gray-400"
+                onChange={(event) => setInput(event.target.value)}
+                placeholder="Ask about projects, stack, or CV..."
+                aria-label="Message assistant"
+                className="flex-1 bg-[#09090B] border border-[#222225] focus:border-sky-400/50 focus:ring-2 focus:ring-sky-400/15 text-[#FAFAFA] rounded-md px-3 py-2 text-sm outline-none placeholder:text-[#71717A] transition-all duration-200"
               />
               <button
-                onClick={handleSend}
-                className="ml-2 bg-blue-600 cursor-pointer hover:bg-blue-700 px-4 py-2 rounded-xl font-semibold"
+                type="submit"
+                disabled={!input.trim() || isTyping}
+                aria-label="Send message"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-[#FAFAFA] text-[#09090B] hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 active:scale-95 cursor-pointer shrink-0"
               >
-                Send
+                <ArrowUp size={16} strokeWidth={1.75} />
               </button>
-            </div>
-          </div>
-        </div>
-      )}
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Floating Chat Icon */}
-      {!isOpen && (
-        <div className="fixed bottom-4 right-4 flex flex-col items-center z-[1000] pointer-events-auto">
-          {introText && (
-            <div className="relative mb-2 px-3 py-1 bg-neutral-800/90 rounded-xl text-sm font-medium text-white shadow-lg animate-fadeIn pointer-events-none">
-              {introText}
-            </div>
-          )}
-
-          {showPermanentText && (
-            <div className="relative mb-2 px-3 py-1 bg-neutral-800/90 rounded-xl text-sm font-medium text-white shadow-lg animate-fadeIn pointer-events-none">
-              Ask me anything
-            </div>
-          )}
-
-          <img
-            src="/chaticon.png"
+      {/* Floating AI Assistant Trigger */}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.button
+            key="chat-trigger"
+            type="button"
+            initial={{ opacity: 0, y: 12, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.92 }}
+            whileHover={{ y: -2, scale: 1.03 }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             onClick={() => setIsOpen(true)}
-            className="w-14 h-14 sm:w-16 sm:h-16 mt-5 cursor-pointer animate-bounce hover:animate-none transition-all"
-            alt="Chat Icon"
-          />
-        </div>
-      )}
+            aria-label="Open AI portfolio assistant"
+            className="group fixed bottom-6 right-5 sm:right-6 z-50 inline-flex items-center gap-2.5 pl-2.5 pr-4 py-2 rounded-full bg-[#111113]/95 backdrop-blur-md border border-sky-400/35 hover:border-sky-400/70 shadow-[0_12px_32px_-6px_rgba(0,0,0,0.85),0_0_24px_-4px_rgba(56,189,248,0.28)] hover:shadow-[0_14px_36px_-6px_rgba(0,0,0,0.9),0_0_30px_-2px_rgba(56,189,248,0.45)] text-[#FAFAFA] transition-all duration-300 cursor-pointer"
+          >
+            <span className="relative inline-flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-sky-400 to-indigo-500 text-[#09090B] shadow-inner">
+              <Bot size={17} strokeWidth={2} className="transition-transform duration-300 group-hover:scale-110" />
+              <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5" aria-hidden="true">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 border border-[#09090B]" />
+              </span>
+            </span>
 
+            <span className="flex flex-col items-start leading-none">
+              <span className="inline-flex items-center gap-1 text-xs font-semibold tracking-tight text-white">
+                Ask AI
+                <Sparkles size={11} strokeWidth={2} className="text-sky-400" />
+              </span>
+              <span className="mt-0.5 font-mono text-[10px] text-[#A1A1AA] group-hover:text-zinc-300 transition-colors">
+                Ebrahim's AI Assistant
+              </span>
+            </span>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </>
   );
 }

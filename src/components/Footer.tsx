@@ -1,6 +1,18 @@
 "use client";
+
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowRight,
+  Check,
+  CheckCircle2,
+  Copy,
+  Mail,
+  MapPin,
+  Phone,
+} from "lucide-react";
+
+const EMAIL = "ebrahimhanif@ieee.org";
 
 export default function Footer() {
   const [form, setForm] = useState({
@@ -8,141 +20,297 @@ export default function Footer() {
     email: "",
     message: "",
   });
-
-  const [showPopup, setShowPopup] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
 
-    // Later connect with backend / email service
-    console.log(form);
-
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
     setForm({ name: "", email: "", message: "" });
-    setShowPopup(true);
-
-    setTimeout(() => {
-      setShowPopup(false);
-    }, 3000);
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 4000);
   };
 
   return (
-    <>
-      <footer
-        id="contact"
-        className="relative z-10 bg-black text-white px-6 py-20 border-t border-neutral-800"
-      >
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-14">
-          {/* LEFT */}
-          <div>
-            <h2 className="text-4xl font-bold mb-6">
-              Let’s <span className="text-[#00ff9f]">Connect</span>
-            </h2>
-
-            <p className="text-gray-400 mb-8 max-w-md">
-              Feel free to reach out for collaborations, freelance projects, or
-              just a friendly chat about technology.
-            </p>
-
-            <div className="space-y-4 text-gray-300">
-              <p className="flex items-center gap-2 hover:text-[#00ffff] transition-colors cursor-pointer">
-                <span className="text-xl">📧</span>
-                <span className="text-[#00ffff]">ebrahimhanif@ieee.org</span>
-              </p>
-
-              <p className="flex items-center gap-2 hover:text-[#00ffff] transition-colors cursor-pointer">
-                <span className="text-xl">📞</span>
-                <span className="text-[#00ffff]">01609460512</span>
-              </p>
-
-              <p className="flex items-center gap-2 hover:text-[#00ffff] transition-colors cursor-pointer">
-                <span className="text-xl">📍</span>
-                <span className="text-[#00ffff]">Uttara Sector 4, Dhaka, Bangladesh</span>
-              </p>
-            </div>
-
+    <footer id="contact" className="bg-[#09090B]/90 text-[#FAFAFA]">
+      <div className="max-w-6xl mx-auto px-6 py-20 sm:py-24">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-2xl"
+        >
+          <div className="flex items-center gap-3 font-mono text-xs tracking-[0.14em] text-[#71717A] uppercase">
+            <span className="text-sky-400/90">06</span>
+            <span
+              className="h-px w-8 bg-gradient-to-r from-sky-400/60 to-[#222225]"
+              aria-hidden="true"
+            />
+            <span>CONTACT</span>
           </div>
+          <h2 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-[#FAFAFA]">
+            Get in Touch
+          </h2>
+          <p className="mt-3 text-sm sm:text-base text-[#A1A1AA] leading-relaxed">
+            Available for full-stack software engineering roles, platform
+            architecture consulting, and technical collaborations.
+          </p>
+        </motion.div>
 
-          {/* RIGHT: FORM */}
-          <form
-            onSubmit={handleSubmit}
-            className="bg-neutral-900/60 backdrop-blur-md p-8 rounded-xl border border-neutral-800 shadow-lg"
-          >
-            <h3 className="text-2xl font-semibold mb-6 text-[#00ffff]">
-              Send a Message
-            </h3>
-
-            <div className="space-y-5">
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={form.name}
-                onChange={handleChange}
-                required
-                className="w-full bg-black/40 border border-neutral-700 rounded-lg px-4 py-3 text-white outline-none focus:border-[#00ff9f]"
-              />
-
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                className="w-full bg-black/40 border border-neutral-700 rounded-lg px-4 py-3 text-white outline-none focus:border-[#00ff9f]"
-              />
-
-              <textarea
-                name="message"
-                placeholder="Your Message"
-                value={form.message}
-                onChange={handleChange}
-                required
-                rows={4}
-                className="w-full bg-black/40 border border-neutral-700 rounded-lg px-4 py-3 text-white outline-none focus:border-[#00ff9f] resize-none"
-              />
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r cursor-pointer from-[#00ff9f] to-[#00ffff] text-black font-bold py-3 rounded-lg hover:opacity-90 transition"
-              >
-                Send Message
-              </button>
-            </div>
-          </form>
-        </div>
-
-        {/* BOTTOM BAR */}
-        <div className="mt-20 pt-6 border-t border-neutral-800 text-center text-gray-500 text-sm">
-          © {new Date().getFullYear()} Ebrahim Hanif — All Rights Reserved.
-        </div>
-      </footer>
-
-      {/* ✅ SUCCESS POPUP */}
-      <AnimatePresence>
-        {showPopup && (
+        {/* 2-Column Layout */}
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
+          {/* Left: Direct Contact Details */}
           <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 50, opacity: 0 }}
-            className="fixed bottom-6 right-6 z-50 bg-neutral-900 border border-[#00ff9f] text-white px-6 py-4 rounded-xl shadow-lg flex items-center gap-3"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.45, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5 flex flex-col justify-between"
           >
-            <span className="text-[#00ff9f] text-xl">✅</span>
-            <div>
-              <p className="font-semibold">Message Sent!</p>
-              <p className="text-sm text-gray-400">
-                I’ll get back to you soon.
-              </p>
+            <div className="border-y border-[#222225] divide-y divide-[#222225]">
+              {/* Email with Copy */}
+              <div className="group py-5 flex items-center justify-between gap-4">
+                <div className="flex items-start gap-3.5 min-w-0">
+                  <Mail
+                    size={17}
+                    strokeWidth={1.5}
+                    className="text-[#71717A] group-hover:text-sky-400 transition-colors mt-0.5 shrink-0"
+                  />
+                  <div className="min-w-0">
+                    <p className="font-mono text-[11px] uppercase tracking-wider text-[#71717A]">
+                      Email
+                    </p>
+                    <a
+                      href={`mailto:${EMAIL}`}
+                      className="mt-1 block text-sm text-[#FAFAFA] hover:text-sky-300 transition-colors truncate"
+                    >
+                      {EMAIL}
+                    </a>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  aria-label="Copy email address"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-[#111113] border border-[#222225] hover:border-zinc-500 hover:bg-[#18181B] font-mono text-xs text-[#A1A1AA] hover:text-[#FAFAFA] transition-all duration-200 active:scale-95 cursor-pointer shrink-0"
+                >
+                  {copied ? (
+                    <>
+                      <Check size={13} strokeWidth={1.5} className="text-emerald-400" />
+                      <span className="text-emerald-300">Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={13} strokeWidth={1.5} />
+                      Copy
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Phone */}
+              <div className="group py-5 flex items-start gap-3.5">
+                <Phone
+                  size={17}
+                  strokeWidth={1.5}
+                  className="text-[#71717A] group-hover:text-sky-400 transition-colors mt-0.5 shrink-0"
+                />
+                <div>
+                  <p className="font-mono text-[11px] uppercase tracking-wider text-[#71717A]">
+                    Phone
+                  </p>
+                  <a
+                    href="tel:+8801609460512"
+                    className="mt-1 block text-sm text-[#FAFAFA] hover:text-sky-300 transition-colors font-mono"
+                  >
+                    +880 1609-460512
+                  </a>
+                </div>
+              </div>
+
+              {/* Location */}
+              <div className="group py-5 flex items-start gap-3.5">
+                <MapPin
+                  size={17}
+                  strokeWidth={1.5}
+                  className="text-[#71717A] group-hover:text-sky-400 transition-colors mt-0.5 shrink-0"
+                />
+                <div>
+                  <p className="font-mono text-[11px] uppercase tracking-wider text-[#71717A]">
+                    Location
+                  </p>
+                  <p className="mt-1 text-sm text-[#FAFAFA]">
+                    Uttara Sector 4, Dhaka, Bangladesh
+                  </p>
+                </div>
+              </div>
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+
+          {/* Right: Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.45, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7"
+          >
+            <form
+              onSubmit={handleSubmit}
+              className="bg-[#111113]/90 border border-[#222225] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-lg p-6 sm:p-8 space-y-5"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label
+                    htmlFor="contact-name"
+                    className="block font-mono text-[11px] uppercase tracking-wider text-[#71717A] mb-2"
+                  >
+                    Name
+                  </label>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder="Your name"
+                    required
+                    className="w-full bg-[#09090B] border border-[#222225] focus:border-sky-400/50 focus:ring-2 focus:ring-sky-400/15 rounded-md px-3.5 py-2.5 text-sm text-[#FAFAFA] placeholder:text-[#71717A] outline-none transition-all duration-200"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="contact-email"
+                    className="block font-mono text-[11px] uppercase tracking-wider text-[#71717A] mb-2"
+                  >
+                    Email
+                  </label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder="you@domain.com"
+                    required
+                    className="w-full bg-[#09090B] border border-[#222225] focus:border-sky-400/50 focus:ring-2 focus:ring-sky-400/15 rounded-md px-3.5 py-2.5 text-sm text-[#FAFAFA] placeholder:text-[#71717A] outline-none transition-all duration-200"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="contact-message"
+                  className="block font-mono text-[11px] uppercase tracking-wider text-[#71717A] mb-2"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  placeholder="Share project details, scope, or timeline..."
+                  required
+                  rows={4}
+                  className="w-full bg-[#09090B] border border-[#222225] focus:border-sky-400/50 focus:ring-2 focus:ring-sky-400/15 rounded-md px-3.5 py-2.5 text-sm text-[#FAFAFA] placeholder:text-[#71717A] outline-none resize-none transition-all duration-200"
+                />
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-1">
+                <button
+                  type="submit"
+                  className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-[#FAFAFA] text-[#09090B] hover:bg-white text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_-10px_rgba(255,255,255,0.4)] active:scale-[0.98] cursor-pointer"
+                >
+                  Send Message
+                  <ArrowRight
+                    size={15}
+                    strokeWidth={1.5}
+                    className="transition-transform duration-200 group-hover:translate-x-0.5"
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {submitted && (
+                    <motion.p
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
+                      transition={{ duration: 0.25 }}
+                      role="status"
+                      className="inline-flex items-center gap-2 text-xs font-mono text-emerald-300"
+                    >
+                      <CheckCircle2 size={15} strokeWidth={1.5} />
+                      Message received. I will respond shortly.
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Minimal Bottom Bar */}
+      <div className="border-t border-[#222225]/80">
+        <div className="max-w-6xl mx-auto px-6 py-7 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#71717A]">
+          <p className="font-mono">
+            &copy; {new Date().getFullYear()} Ebrahim Hanif
+          </p>
+
+          <div className="flex items-center gap-6">
+            <a
+              href="https://github.com/Ebrahimhanif12/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#FAFAFA] transition-colors duration-200"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ebrahimhanif12/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-sky-400 transition-colors duration-200"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://www.facebook.com/ebrahim.hanif.779/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue-400 transition-colors duration-200"
+            >
+              Facebook
+            </a>
+            <a
+              href={`mailto:${EMAIL}`}
+              className="hover:text-[#FAFAFA] transition-colors duration-200"
+            >
+              Email
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }

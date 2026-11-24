@@ -1,103 +1,138 @@
 "use client";
+
 import Link from "next/link";
 import { useState } from "react";
+import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+
+const navLinks = [
+  { label: "Work", href: "/#work" },
+  { label: "Experience", href: "/#experience" },
+  { label: "Research", href: "/#research" },
+  { label: "Leadership", href: "/#leadership" },
+  { label: "Contact", href: "/#contact" },
+];
 
 export default function Navbar() {
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-
-  const navItems = [
-    { name: "Home", link: "/" },
-    { name: "About", link: "#about" },
-    { name: "Experience", link: "#experience" },
-    { name: "Education", link: "#education" },
-    { name: "Contribution", link: "#contribution" },
-    { name: "Projects", link: "#projects" },
-    { name: "Achievement", link: "/achievement" },
-  ];
-
-  const handleScroll = (link: string) => {
-    if (link.startsWith("#")) {
-      const id = link.replace("#", "");
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    } else {
-      window.location.href = link; // route
-    }
-  };
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 180,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   return (
-    <nav className="fixed bg-transparent top-0 left-0 w-full z-50">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
-        {/* Desktop Name */}
-        <Link href="/">
-        <div className="text-white cursor-pointer flex  font-bold text-xl ">
-          <img className="h-10 w-20" src="/logo.png" alt="" />
-          {/* <p>Ebrahim Hanif</p> */}
-          
-        </div>
+    <header className="sticky top-0 z-50 w-full bg-[#09090B]/75 backdrop-blur-md border-b border-[#222225]/80 transition-colors">
+      <nav
+        aria-label="Primary Navigation"
+        className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between"
+      >
+        {/* Left Wordmark / Monogram */}
+        <Link
+          href="/"
+          className="inline-flex items-center gap-3 group focus:outline-none"
+        >
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-[#111113] border border-[#222225] group-hover:border-sky-400/40 group-hover:bg-[#18181B] group-hover:shadow-[0_0_16px_rgba(56,189,248,0.18)] font-mono text-xs font-semibold tracking-wider text-[#FAFAFA] transition-all duration-300 group-hover:-translate-y-0.5">
+            EH
+          </span>
+          <span className="text-sm font-medium tracking-tight text-[#FAFAFA] group-hover:text-white transition-colors hidden sm:inline">
+            Ebrahim Hanif
+          </span>
         </Link>
 
-        {/* Desktop Nav Items */}
-        <div className="hidden md:flex space-x-8">
-          {navItems.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={() => handleScroll(item.link)}
-              className="text-white text-lg cursor-pointer hover:text-[#00ffff] transition-colors font-medium"
+        {/* Desktop Links */}
+        <div className="hidden md:flex items-center gap-7">
+          {navLinks.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="relative py-1 text-sm text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors duration-200 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[1.5px] after:w-full after:origin-left after:scale-x-0 after:bg-gradient-to-r after:from-sky-400 after:to-indigo-400 after:transition-transform after:duration-300 hover:after:scale-x-100"
             >
-              {item.name}
-            </button>
+              {item.label}
+            </Link>
           ))}
+          <a
+            href="/Ebrahim_Hanif_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md border border-[#222225] bg-[#111113] hover:border-zinc-500 hover:bg-[#18181B] text-xs font-mono text-[#FAFAFA] transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98]"
+          >
+            Resume
+            <ArrowUpRight
+              size={13}
+              strokeWidth={1.5}
+              className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </a>
         </div>
 
-        {/* Mobile Hamburger */}
-        <div className="md:hidden">
-          <button
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="text-white focus:outline-none"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
-              {isMobileOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-          </button>
-        </div>
-      </div>
+        {/* Mobile Toggle */}
+        <button
+          type="button"
+          onClick={() => setMobileOpen((prev) => !prev)}
+          aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={mobileOpen}
+          className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-md border border-[#222225] bg-[#111113] text-[#FAFAFA] hover:border-[#3F3F46] hover:bg-[#18181B] transition-all duration-200 active:scale-95 cursor-pointer"
+        >
+          {mobileOpen ? (
+            <X size={18} strokeWidth={1.5} />
+          ) : (
+            <Menu size={18} strokeWidth={1.5} />
+          )}
+        </button>
+      </nav>
+
+      {/* Scroll Progress Hairline */}
+      <motion.div
+        aria-hidden="true"
+        style={{ scaleX }}
+        className="h-[1.5px] w-full origin-left bg-gradient-to-r from-sky-400 via-indigo-400 to-zinc-200"
+      />
 
       {/* Mobile Menu */}
-      {isMobileOpen && (
-        <div className="md:hidden bg-transparent">
-          {navItems.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={() => {
-                handleScroll(item.link);
-                setIsMobileOpen(false);
-              }}
-              className="block w-full text-right px-6 py-3 text-white hover:bg-gray-800 transition-colors"
-            >
-              {item.name}
-            </button>
-          ))}
-        </div>
-      )}
-    </nav>
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden overflow-hidden bg-[#09090B]/95 backdrop-blur-md border-t border-[#222225]"
+          >
+            <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col divide-y divide-[#222225]">
+              {navLinks.map((item, idx) => (
+                <motion.div
+                  key={item.href}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2, delay: idx * 0.03 }}
+                >
+                  <Link
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="block py-3 text-sm text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <div className="pt-4 pb-1">
+                <a
+                  href="/Ebrahim_Hanif_CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileOpen(false)}
+                  className="inline-flex items-center justify-center gap-1.5 w-full px-4 py-2.5 rounded-md border border-[#222225] bg-[#111113] hover:border-[#3F3F46] hover:bg-[#18181B] text-xs font-mono text-[#FAFAFA] transition-colors"
+                >
+                  Resume (PDF)
+                  <ArrowUpRight size={14} strokeWidth={1.5} />
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 }
