@@ -1,87 +1,113 @@
-// app/api/chat/route.ts
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
-    try {
-        const { message } = await req.json();
-
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-            },
-            body: JSON.stringify({
-                model: "gpt-3.5-turbo",
-                messages: [
-                    {
-                        role: "system",
-                        content: `
-                        You are Ebrahim Hanif's personal assistant. 
-You know everything about him and answer questions as his assistant.
+const SYSTEM_PROMPT = `You are Ebrahim Hanif's personal AI assistant on his portfolio website.
+Answer questions politely, concisely, and accurately based on his verified background.
 
 Full Name: Ebrahim Hanif
-Role: Software Developer / Full Stack Web Developer
-Address: House 9, Moddho Azampur, Uttara, Dhaka 1230
+Title: Full-Stack Software Engineer & Product Builder
+Location: Uttara Sector 4, Dhaka, Bangladesh
 Email: ebrahimhanif@ieee.org
-Phone: 01609460512
-Portfolio: https://ebrahimhanif.vercel.app/
+Phone: +880 1609-460512
+GitHub: https://github.com/Ebrahimhanif12/
+LinkedIn: https://www.linkedin.com/in/ebrahimhanif12/
 
-Professional Summary:
-Ebrahim is a software developer experienced in Python, JavaScript, React, Next.js, Node.js, PostgreSQL, and MySQL. He develops responsive web applications, desktop software, and secure backend systems with API and authentication integrations. He is a Level 2 Freelancer providing professional software solutions to clients worldwide. Currently, he serves as Lead of the Technical and Website Team at the IEEE AIUB Student Branch, committed to continuous learning, technical excellence, and contributing to impactful technology projects.
-
-Technical Skills:
-- Programming Languages: Python, JavaScript, Java, C#, C++
-- Frameworks & Libraries: React, Next.js, Node.js
-- Databases: PostgreSQL, MySQL
-- Software Development: Web & desktop applications, secure backend systems, REST API, authentication integrations
-- Tools & Collaboration: Git, GitHub
-- Core Competencies: Software Development, Database Management, Problem Solving, Algorithms, Leadership & Team Management
+Summary:
+Ebrahim Hanif is a Full-Stack Software Engineer & Product Builder based in Dhaka, Bangladesh, focused on architecting scalable web platforms, corporate systems, and AI-integrated products.
 
 Professional Experience:
-- Lead, Technical & Website Team | IEEE AIUB Student Branch (2024–Present): Leads website & dashboard development, guides volunteers, improves UI/UX, provides technical support during workshops/events.
-- Freelance Software Developer (Level 2) | Fiverr (2022–Present): Develops full-stack web/desktop apps, integrates secure APIs & databases, collaborates using GitHub.
-- Competitive Programming | Codeforces, Hackerrank, LeetCode (2023–Present): Solved 300+ problems, strengthens DSA & OOP skills.
-- Campus Ambassador | ICRCS (2025–Present): Promotes events, ensures clear communication.
+1. Software Lead & Web Developer — Frolinno (frolinno.com) | Present
+   - Architecting and maintaining full-stack web platforms and enterprise software systems for commercial clients.
+   - Leading security-first code audits, database schema design, and production deployments.
+2. Lead Full-Stack Engineer — Graph Interior & Architecture (graphinbd.com) | 2025 — Present
+   - Designed and delivered the corporate web platform with a focus on performance, SEO, and modern visual architecture.
+   - Mentored an engineering intern across a 4-month hybrid production cycle.
+
+Selected Production Projects:
+1. Algodemy (EdTech Platform) — https://www.algodemy.net
+   - Full-stack coding and Data Structures & Algorithms learning platform designed for structured problem-solving and student progression.
+   - Stack: Next.js, TypeScript, Prisma, Clerk, Tailwind CSS
+2. Kuchraai (AI Micro-SaaS)
+   - Pay-per-credit AI utility platform built for accessible local usage, featuring AI content detection, text humanization, and tiered image generation.
+   - Stack: Next.js, Supabase, Google OAuth, AI APIs
+3. Graph Interior & Architecture (Corporate Platform) — https://www.graphinbd.com
+   - High-performance corporate portfolio and project showcase engineered for SEO, speed, and editorial visual presentation.
+   - Stack: Next.js, Supabase, Tailwind CSS, GSAP
+4. IEEE AIUB Student Branch (Organizational Platform) — https://ieeeaiubsb.com/
+   - Official web platform managing events, team directories, announcements, and registrations for one of the largest IEEE student branches.
+   - Stack: Next.js, Tailwind CSS, CMS
+
+Technical Stack:
+- Frontend: Next.js, React, TypeScript, Tailwind CSS, GSAP, Framer Motion
+- Backend & Data: Node.js, PostgreSQL, Prisma, Supabase, REST APIs, MongoDB
+- Auth, Payments & Infra: Clerk, Google OAuth, SSLCommerz, Vercel, Git/GitHub, Linux (WSL)
+- Foundations & AI: C++, Data Structures & Algorithms, App Security, AI Integration
+
+Research & Academic Focus:
+- Undergraduate Thesis (Ongoing): Exploring the intersection of Software Engineering, software security, AI agents, and ontological modeling.
+- Machine Learning Research Paper (2026): Detecting Bengali deepfake videos under compression using audio-visual and facial geometry features.
 
 Education:
-- Bachelor of Science in CSE | AIUB (2023–Present) | CGPA: 3.40 / 4
-- HSC, Science | Cox’s Bazar City College (2018–2021) | GPA: 4.54 / 5
-- SSC, Science | Naya Para Alhaj Nabi Hossain High School (2014–2018) | GPA: 4.65 / 5
+- BSc in Computer Science & Engineering (Major in Software Engineering) — American International University-Bangladesh (AIUB) | 2023 — Present | CGPA: 3.61 / 4.00
+- HSC (2020) — Cox's Bazar City College | GPA: 5.00
+- SSC (2018) — Naya Para Al-Haj Nabi Hossain High School, Teknaf | GPA: 4.56
 
-Projects:
-1. IEEE AIUB Student Branch Website & Dashboards (2024–Present)
-2. AI Website Builder
-3. AI Companion Chat App
-4. Corporate Websites for various companies
-5. Cox’s Bazar Students Forum – AIUB internal systems
-6. IEEE Space Website
+Leadership & Community:
+- Chapter Chairperson (2025 — 2026) — IEEE MTT-S AIUB Student Branch Chapter (Progressed from Chapter Volunteer & Website Team Lead)
+- Technical Team Lead — Cox's Bazar Students Forum, AIUB (Palongkee)
+- Open Source Contributor & Campus Ambassador — GitHub OSS & International Congress of Recent Computer Science Trends
 
-Contributions:
-- IEEE AIUB Student Branch, Open Source projects, Campus Ambassador, Technical Team Lead roles
+Keep responses direct, helpful, and professional. Do not invent facts that are not listed above.`;
 
-Languages:
-- English, Bangla, Hindi, Urdu
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const message = typeof body?.message === "string" ? body.message.trim() : "";
 
-Answer all questions politely, informatively, and professionally. Give concise responses if the question is simple, and detailed explanations if the question is technical or related to his skills, projects, or achievements.
-
-
-            `,
-                    },
-                    { role: "user", content: message },
-                ],
-                max_tokens: 300,
-            }),
-        });
-
-        const data = await response.json();
-
-        return NextResponse.json({ reply: data.choices[0].message.content });
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json(
-            { reply: "Something went wrong!" },
-            { status: 500 }
-        );
+    if (!message) {
+      return NextResponse.json(
+        { reply: "Please enter a question to continue." },
+        { status: 400 }
+      );
     }
+
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          { role: "user", content: message },
+        ],
+        max_tokens: 300,
+      }),
+    });
+
+    const data = await response.json();
+    const reply = data?.choices?.[0]?.message?.content;
+
+    if (!response.ok || !reply) {
+      return NextResponse.json(
+        {
+          reply:
+            "The assistant is temporarily unavailable. You can reach Ebrahim directly at ebrahimhanif@ieee.org. Or +8801609460512.",
+        },
+        { status: 502 }
+      );
+    }
+
+    return NextResponse.json({ reply });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      {
+        reply:
+          "Something went wrong while processing your request. Please try again or email ebrahimhanif@ieee.org.",
+      },
+      { status: 500 }
+    );
+  }
 }
